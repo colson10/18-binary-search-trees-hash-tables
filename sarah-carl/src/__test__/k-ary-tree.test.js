@@ -30,9 +30,10 @@ afterEach(() => {
 });
 
 describe('Testing K-Ary-Tree methods', () => {
-  describe('testing breadth first traversal', () => {
+
+  describe('testing toString method', () => {
     // let values = [];
-    test.only('value should be 12364578', () => {
+    test('value should be 12364578', () => {
       const one = new KAryNode(1);
       one.appendChild(2);
       one.appendChild(3);
@@ -48,21 +49,23 @@ describe('Testing K-Ary-Tree methods', () => {
       // kAryTree.breadthFirstSearch(print);
       expect(kAryTree.toString()).toEqual('1\n2\n3\n4\n5\n6\n7\n8\n');
     });
-    test('value should be 11036457811', () => {
-      one.left = ten;
-      one.right = three;
-      three.left = four;
-      three.right = five;
-      ten.left = six;
-      six.right = seven;
-      seven.left = eight;
-      seven.right = eleven;
-      tree = new Tree(one);
-      expect(tree.breadthFirstSearch()).toEqual('11036457811');
+  });
+
+  describe('testing find value method', () => {
+    test.only('value should be 6', () => {
+      const one = new KAryNode(1);
+      one.appendChild(2);
+      one.appendChild(3);
+      one.appendChild(4);
+      
+      one.children[1].appendChild(5); // 0
+      one.children[1].appendChild(6); // 1
+      one.children[1].appendChild(7); // 2
+      
+      one.children[1].children[1].appendChild(8);
+      
+      const kAryTree = new KAryTree(one);
+      expect(kAryTree.find(6)).toEqual(6);
     });
-    test('should return error', () => {
-      tree = null;
-      expect(breadthFirst(tree)).toThrowError();
-    });
-   });
-})
+  });
+});

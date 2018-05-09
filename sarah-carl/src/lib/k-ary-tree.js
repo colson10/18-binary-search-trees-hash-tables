@@ -33,10 +33,29 @@ class KAryTree {
     }
   }
 
+  _breadthFirstReturn(root, value) { //eslint-disable-line
+    const queue = new Queue();
+    queue.enqueue(root);
+  
+    let current = null;
+  
+    while (!queue.isEmpty()) {
+      current = queue.dequeue();
+      
+      if (current.value === value) {
+        return current.value;
+      }
+  
+      for (let i = 0; i < current.children.length; i++) {
+        queue.enqueue(current.children[i]);
+      }
+    }
+  }
+
   toString() {
     let values = '';
-    const print = (node) => {
-      values += `${node.toString()}\n`;
+    const print = (nodeVal) => {
+      values += `${nodeVal.toString()}\n`;
       return values;
     };
     
@@ -46,6 +65,10 @@ class KAryTree {
     this._breadthFirstSearch(this.root, print);
     console.log(values);
     return values;
+  }
+
+  find(value) {
+    return this._breadthFirstReturn(this.root, value);
   }
 }
 
