@@ -5,6 +5,41 @@ export default class BinarySearchTree {
     this.root = root;
   }
 
+  // ------------------------------------------------------------------
+  // sarah -- added these functions.. not necc working, linter is mad because i don't use 'this', these are just rough ideas
+  // ------------------------------------------------------------------
+
+  inOrder(rootNode, callback) { // eslint-disable-line
+    if (rootNode) {
+      inOrder(rootNode.left);
+      callback(rootNode);
+      inOrder(rootNode.right);
+    }
+  }
+  minNode(rootNode) { // eslint-disable-line
+    if (!rootNode) {
+      return undefined;
+    }
+    if (rootNode.left) {
+      return minNode(rootNode.left);
+    }
+    return rootNode;
+  }
+       
+  maxNode(rootNode) { // eslint-disable-line
+    if (!rootNode) {
+      return undefined;
+    }
+    if (rootNode.right) {
+      return maxNode(rootNode.right);
+    }
+    return rootNode;
+  }
+
+  // ------------------------------------------------------------------
+  // sarah -- the end of the potentially not working helper functions
+  // ------------------------------------------------------------------
+
   // Big O
   // Time: O(H) -> O(lg n)
   // Space: O(H) -> O(lg n)
@@ -56,16 +91,14 @@ export default class BinarySearchTree {
       return null;
     } else if (rootNode.value === value) {
       if (rootNode.left && rootNode.right) {
-        // Find inorder successor of the node. Copy contents of the inorder successor to the node and delete the inorder successor, ie the node that is inOrder in terms of Value 
-       let temp = // find the inorder successor
+        // Find inorder successor of the node. according to my algorithms textbook, this node will be to the right of the node we delete, if the next right node has no left child then we can replace the node with its right child, otherwise if the right child has a left child, then the node to delete must be rplaced with the right childs left child and the the right child then become the right child of is prvius left child?
         // Copy the inorder successor's content to this node
-        rootNode.value = temp.value
         // Delete the inorder successor
-        rootNode.right = deleteNode(rootNode.right, temp.value) // not an actual function
+        rootNode.right = deleteNode(rootNode.right, temp.value); // not an actual function
       } else if (rootNode.left) {
         //  copy the child to the node 
         // delete the child
-      }  //  copy the child to the node 
+      } //  copy the child to the node 
       // delete the child
     } else if (rootNode.value < value) {
       return this._find(rootNode.right, value);
