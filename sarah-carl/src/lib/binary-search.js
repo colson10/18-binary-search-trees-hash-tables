@@ -77,7 +77,7 @@ export default class BinarySearchTree {
     if (!this.root) {
       return null;
     }
-    return this._find(this.root, value);
+    return this._findAndRemove(this.root, value);
 
     /*
     GENERAL STEPS
