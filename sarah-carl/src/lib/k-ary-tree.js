@@ -1,6 +1,7 @@
 'use strict';
 
 import Queue from 'queue-fifo';
+import Stack from './stack';
 
 class KAryTree {
   constructor(root = null) {
@@ -32,8 +33,7 @@ class KAryTree {
       }
     }
   }
-
-  _breadthFirstReturn(root, value) { //eslint-disable-line
+  _breadthFirstReturn(root, value) { // eslint-disable-line
     const queue = new Queue();
     queue.enqueue(root);
   
@@ -41,7 +41,9 @@ class KAryTree {
   
     while (!queue.isEmpty()) {
       current = queue.dequeue();
-      
+  
+      // this will be replaced with another operation. 
+      // console.log(`Visiting ${current.value}`);
       if (current.value === value) {
         return current.value;
       }
@@ -51,6 +53,24 @@ class KAryTree {
       }
     }
   }
+  _depthFirstSearch(root, callback) { //eslint-disable-line
+    const stack = new Stack();
+    stack.push(root);
+  
+    let current = null;
+  
+    while (!stack.isEmpty()) {
+      current = stack.pop();
+      
+      callback(current.value);
+      
+  
+      for (let i = 0; i < current.children.length; i++) {
+        stack.push(current.children[i]);
+      }
+    }
+  }
+
 
   toString() {
     let values = '';
@@ -63,12 +83,26 @@ class KAryTree {
       return null;
     }
     this._breadthFirstSearch(this.root, print);
-    console.log(values);
+    // console.log(values);
     return values;
   }
 
   find(value) {
     return this._breadthFirstReturn(this.root, value);
+  }
+
+  toArray() {
+    const values = [];
+    const print = (nodeVal) => {
+      values.push(nodeVal);
+      // return values;
+    };
+    if (!this.root) {
+      return null;
+    }
+    this._depthFirstSearch(this.root, print);
+    // console.log(values);
+    return values;
   }
 }
 

@@ -2,6 +2,7 @@
 
 import KAryTree from '../lib/k-ary-tree';
 import KAryNode from '../lib/k-ary-node';
+import Stack from '../lib/stack';
 
 let tree = null;
 
@@ -52,7 +53,7 @@ describe('Testing K-Ary-Tree methods', () => {
   });
 
   describe('testing find value method', () => {
-    test.only('value should be 6', () => {
+    test('value should be 6', () => {
       const one = new KAryNode(1);
       one.appendChild(2);
       one.appendChild(3);
@@ -66,6 +67,41 @@ describe('Testing K-Ary-Tree methods', () => {
       
       const kAryTree = new KAryTree(one);
       expect(kAryTree.find(6)).toEqual(6);
+    });
+  });
+  describe('testing toArray method', () => {
+    // let values = [];
+    test.only('value should be [1, 4, 3, 7, 6, 8, 5, 2]', () => {
+      const one = new KAryNode(1);
+      one.appendChild(2);
+      one.appendChild(3);
+      one.appendChild(4);
+      
+      one.children[1].appendChild(5); // 0
+      one.children[1].appendChild(6); // 1
+      one.children[1].appendChild(7); // 2
+      
+      one.children[1].children[1].appendChild(8);
+      
+      const kAryTree = new KAryTree(one);
+      // kAryTree.breadthFirstSearch(print);
+      expect(kAryTree.toArray()).toEqual([1, 4, 3, 7, 6, 8, 5, 2]);
+    });
+  });
+  describe('Testing our Stack constructor methods', () => {
+    test('#constructor', () => {
+      const testStack = new Stack();
+      expect(testStack._storage.head).toBeNull();
+    });
+  
+    test('push method should add a value to the end of the stack storage', () => {
+      const testStack = new Stack();
+      testStack.push(1);
+      testStack.push(2);
+      testStack.push(100);
+      expect(testStack._storage.head.value).toEqual(1);
+      expect(testStack._storage.head.next.value).toEqual(2);
+      expect(testStack._storage.head.next.next.value).toEqual(100);
     });
   });
 });
