@@ -21,7 +21,7 @@ export default class BinarySearchTree {
       return undefined;
     }
     if (rootNode.left) {
-      return minNode(rootNode.left);
+      return this._findSmallest(rootNode.left);
     }
     return rootNode;
   }
@@ -91,13 +91,19 @@ export default class BinarySearchTree {
     let childNode = null;
     if (!rootNode) {
       return null;
-    } else if (rootNode.value < value) {
+    }
+    if (rootNode.value < value) {
       childNode = rootNode.right;
       // return this._findAndRemove(rootNode.right, value);
-    } else if (rootNode.value > value) {
+    } else {
       childNode = rootNode.left;
       //  return this._findAndRemove(rootNode.left, value);
-    } else if (childNode.value !== value) {
+    }
+    if (!childNode) {
+      return null;
+    }
+    if (childNode.value !== value) {
+      console.log(childNode.value, 'checking child node value');
       return this._findAndRemove(childNode, value);
     }
     if (!childNode.right && !childNode.left) {
@@ -105,8 +111,7 @@ export default class BinarySearchTree {
     } else if (childNode.right && childNode.left) {
       let newVal = null;
       newVal = this._findSmallest(childNode.right);
-      this._findAndRemove(childNode.right, newVal);
-
+      return this._findAndRemove(childNode.right, newVal);
     } else if (childNode.right) {
       if (rootNode.value > childNode.value) {
         rootNode.left = childNode.right;
