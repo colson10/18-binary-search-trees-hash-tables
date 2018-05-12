@@ -9,14 +9,14 @@ export default class BinarySearchTree {
   // sarah -- added these functions.. not necc working, linter is mad because i don't use 'this', these are just rough ideas
   // ------------------------------------------------------------------
 
-  inOrder(rootNode, callback) { // eslint-disable-line
-    if (rootNode) {
-      inOrder(rootNode.left);
-      callback(rootNode);
-      inOrder(rootNode.right);
-    }
-  }
-  minNode(rootNode) { // eslint-disable-line
+  // inOrder(rootNode, callback) { // eslint-disable-line
+  //   if (rootNode) {
+  //     inOrder(rootNode.left);
+  //     callback(rootNode);
+  //     inOrder(rootNode.right);
+  //   }
+  // }
+  _findSmallest(rootNode) { // eslint-disable-line
     if (!rootNode) {
       return undefined;
     }
@@ -26,15 +26,15 @@ export default class BinarySearchTree {
     return rootNode;
   }
        
-  maxNode(rootNode) { // eslint-disable-line
-    if (!rootNode) {
-      return undefined;
-    }
-    if (rootNode.right) {
-      return maxNode(rootNode.right);
-    }
-    return rootNode;
-  }
+  // maxNode(rootNode) { // eslint-disable-line
+  //   if (!rootNode) {
+  //     return undefined;
+  //   }
+  //   if (rootNode.right) {
+  //     return maxNode(rootNode.right);
+  //   }
+  //   return rootNode;
+  // }
 
   // ------------------------------------------------------------------
   // sarah -- the end of the potentially not working helper functions
@@ -86,24 +86,36 @@ export default class BinarySearchTree {
     }
     return this._find(rootNode.left, value);
   }
-  _findAndRemove(rootNode, value) {
+
+  _findAndRemove(rootNode, value) { //eslint-disable-line
+    let childNode = null;
     if (!rootNode) {
       return null;
-    } else if (rootNode.value === value) {
-      if (rootNode.left && rootNode.right) {
-        // Find inorder successor of the node. according to my algorithms textbook, this node will be to the right of the node we delete, if the next right node has no left child then we can replace the node with its right child, otherwise if the right child has a left child, then the node to delete must be rplaced with the right childs left child and the the right child then become the right child of is prvius left child?
-        // Copy the inorder successor's content to this node
-        // Delete the inorder successor
-        rootNode.right = deleteNode(rootNode.right, temp.value); // not an actual function
-      } else if (rootNode.left) {
-        //  copy the child to the node 
-        // delete the child
-      } //  copy the child to the node 
-      // delete the child
     } else if (rootNode.value < value) {
-      return this._find(rootNode.right, value);
+      childNode = rootNode.right;
+      // return this._findAndRemove(rootNode.right, value);
+    } else if (rootNode.value > value) {
+      childNode = rootNode.left;
+      //  return this._findAndRemove(rootNode.left, value);
+    } else if (childNode.value !== value) {
+      return this._findAndRemove(childNode, value);
     }
-    return this._find(rootNode.left, value);
+    if (!childNode.right && !childNode.left) {
+      childNode = null;
+    } else if (childNode.right && childNode.left) {
+      let newVal = null;
+      newVal = this._findSmallest(childNode.right);
+      this._findAndRemove(childNode.right, newVal);
+
+    } else if (childNode.right) {
+      if (rootNode.value > childNode.value) {
+        rootNode.left = childNode.right;
+      } rootNode.right = childNode.right;
+    } else if (childNode.left) {
+      if (rootNode.value > childNode.value) {
+        rootNode.left = childNode.left;
+      } rootNode.right = childNode.left;
+    }
   }
 
   remove(value) {
@@ -111,17 +123,5 @@ export default class BinarySearchTree {
       return null;
     }
     return this._findAndRemove(this.root, value);
-
-    /*
-    GENERAL STEPS
-    1. find (value)
-    2. check to see if node has children:
-        2.a if no children
-          remove node
-        2.b if one child
-            copy the child to the node 
-            delete the child
-        2.c if two children
-              Find inorder successor of the node. Copy contents of the inorder successor to the node and delete the inorder successor. Note that inorder predecessor can also be used. */
   }
 }

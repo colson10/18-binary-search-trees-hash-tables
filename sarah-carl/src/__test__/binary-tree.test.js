@@ -33,6 +33,34 @@ describe('Testing Binary-Search-Tree methods', () => {
       tree.insert(ten);
       tree.insert(eight);
       console.log('what is it', util.inspect(tree, { depth: null }));
+      expect(tree.root.value).toEqual(7);
+      // maybe we could use one of our binary tree traversals to test?
+    });
+  });
+  describe('testing find method', () => {
+    test('value should be', () => {
+      tree = new BinarySearchTree();
+      tree.insert(seven);
+      tree.insert(one);
+      tree.insert(eleven);
+      tree.insert(four);
+      tree.insert(ten);
+      tree.insert(eight);
+      expect(tree.find(4)).toBeTruthy();
+      expect(tree.find(200)).toBeFalsy();
+      // maybe we could use one of our binary tree traversals to test?
+    });
+  });
+  describe('testing remove method', () => {
+    test('value should be', () => {
+      tree = new BinarySearchTree();
+      tree.insert(seven);
+      tree.insert(one);
+      tree.insert(eleven);
+      tree.insert(four);
+      tree.insert(ten);
+      tree.insert(eight);
+      console.log('what is it', util.inspect(tree, { depth: null }));
       // maybe we could use one of our binary tree traversals to test?
     });
   });
