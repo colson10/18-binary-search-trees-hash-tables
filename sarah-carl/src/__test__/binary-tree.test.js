@@ -17,35 +17,47 @@ const nine = new Node(9);
 const ten = new Node(10);
 const eleven = new Node(11);
 
-const expectedTree = new BinarySearchTree();
-expectedTree.insert(seven);
-expectedTree.insert(eleven);
-expectedTree.insert(four);
-expectedTree.insert(ten);
-expectedTree.insert(eight);
 
-afterEach(() => {
-  tree = null;
-  // values = '';
-});
+const testTree = new BinarySearchTree();
+testTree.insert(seven);
+testTree.insert(eleven);
+testTree.insert(four);
+testTree.insert(ten);
+testTree.insert(eight);
+
+const testTreeTwo = new BinarySearchTree();
+testTreeTwo.insert(seven);
+testTreeTwo.insert(four);
+testTreeTwo.insert(three);
+testTreeTwo.insert(one);
+testTreeTwo.insert(eleven);
+testTreeTwo.insert(ten);
+testTreeTwo.insert(eight);
+
 
 describe('Testing Binary-Search-Tree methods', () => {
   describe('testing insert method', () => {
     test('value should be', () => {
+      tree = null;
       tree = new BinarySearchTree();
       tree.insert(seven);
-      tree.insert(one);
-      tree.insert(eleven);
       tree.insert(four);
+      tree.insert(eleven);
+      tree.insert(one);
       tree.insert(ten);
       tree.insert(eight);
       console.log('what is it', util.inspect(tree, { depth: null }));
       expect(tree.root.value).toEqual(7);
+      expect(tree.root.right.value).toEqual(11);
+      expect(tree.root.left.value).toEqual(4);
+      // expect(tree.root.right.right.right.value).toBeFalsy();
+      expect(tree.root.right.left.value).toEqual(10);
       // maybe we could use one of our binary tree traversals to test?
     });
   });
   describe('testing find method', () => {
     test('value should be', () => {
+      tree = null;
       tree = new BinarySearchTree();
       tree.insert(seven);
       tree.insert(one);
@@ -59,7 +71,8 @@ describe('Testing Binary-Search-Tree methods', () => {
     });
   });
   describe('testing remove method', () => {
-    test.only('value should be', () => {
+    test('removing one, with one child node, value should be', () => {
+      tree = null;
       tree = new BinarySearchTree();
       tree.insert(seven);
       tree.insert(four);
@@ -68,12 +81,24 @@ describe('Testing Binary-Search-Tree methods', () => {
       tree.insert(eleven);
       tree.insert(ten);
       tree.insert(eight);
-      console.log('what is it', util.inspect(tree, { depth: null }));
-      console.log('this is the expected tree...', expectedTree);
-      console.log('expected tree: ', util.inspect(expectedTree, { depth: null }));
-      // console.log(tree.remove(1), 'this is the tree.remove');
-      // maybe we could use one of our binary tree traversals to test?
-      expect(tree.remove(1)).toEqual(expectedTree);
+      console.log('expected tree: ', util.inspect(testTree, { depth: null }));
+      console.log('tree afer remove', tree.remove(1));
+      expect(tree.remove(1)).toEqual(testTree);
+    });
+    test.only('removing two, with two children, value should be', () => {
+      const treeRemoveTwo = new BinarySearchTree();
+      treeRemoveTwo.insert(seven);
+      treeRemoveTwo.insert(four);
+      treeRemoveTwo.insert(two);
+      treeRemoveTwo.insert(three);
+      treeRemoveTwo.insert(one);
+      treeRemoveTwo.insert(eleven);
+      treeRemoveTwo.insert(ten);
+      treeRemoveTwo.insert(eight);
+      treeRemoveTwo.remove(2);
+      console.log('expected tree: ', util.inspect(testTreeTwo, { depth: null }));
+      console.log('tree afer remove', util.inspect(treeRemoveTwo, { depth: null }));
+      expect(treeRemoveTwo).toEqual(testTreeTwo);
     });
   });
 });

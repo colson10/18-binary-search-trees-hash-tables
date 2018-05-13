@@ -1,6 +1,6 @@
 'use strict';
 
-export default class BinarySearchTree {
+class BinarySearchTree {
   constructor(root = null) {
     this.root = root;
   }
@@ -16,14 +16,14 @@ export default class BinarySearchTree {
   //     inOrder(rootNode.right);
   //   }
   // }
-  _findSmallest(rootNode) { // eslint-disable-line
-    if (!rootNode) {
+  _findSmallest(currNode) { // eslint-disable-line
+    if (!currNode) {
       return undefined;
     }
-    if (rootNode.left) {
-      return this._findSmallest(rootNode.left);
+    if (currNode.left) {
+      return this._findSmallest(currNode.left);
     }
-    return rootNode;
+    return currNode;
   }
        
   // maxNode(rootNode) { // eslint-disable-line
@@ -87,39 +87,61 @@ export default class BinarySearchTree {
     return this._find(rootNode.left, value);
   }
 
-  _findAndRemove(rootNode, value) { //eslint-disable-line
+  _findAndRemove(currNode, value) { //eslint-disable-line
     let childNode = null;
-    if (!rootNode) {
+    if (!currNode) {
       return null;
     }
-    if (rootNode.value < value) {
-      childNode = rootNode.right;
-      // return this._findAndRemove(rootNode.right, value);
+    if (currNode.value < value) {
+      childNode = currNode.right;
+      // return this._findAndRemove(currNode.right, value);
     } else {
-      childNode = rootNode.left;
-      //  return this._findAndRemove(rootNode.left, value);
+      childNode = currNode.left;
+      //  return this._findAndRemove(currNode.left, value);
+    }
+
+    while (childNode && childNode.value !== value) {
+      // if (childNode.value !== value) {
+      console.log(childNode.value, 'checking child node value');
+      console.log(currNode.value, 'checking current node value');
+      return this._findAndRemove(childNode, value);
+      // }
     }
     if (!childNode) {
-      return null;
-    }
-    if (childNode.value !== value) {
-      console.log(childNode.value, 'checking child node value');
-      return this._findAndRemove(childNode, value);
+      return this;
     }
     if (!childNode.right && !childNode.left) {
+      console.log('deleting: ', childNode);
       childNode = null;
+      return this;
     } else if (childNode.right && childNode.left) {
+      console.log('deleting: ', childNode);
+      console.log('node to update: ', currNode);
+      console.log('whats this in else if: ', this);
       let newVal = null;
       newVal = this._findSmallest(childNode.right);
-      return this._findAndRemove(childNode.right, newVal);
+      currNode.value = newVal;
+      this._findAndRemove(childNode.right, newVal);
     } else if (childNode.right) {
-      if (rootNode.value > childNode.value) {
-        rootNode.left = childNode.right;
-      } rootNode.right = childNode.right;
+      console.log('deleting: ', childNode);
+      console.log('node to update: ', currNode);
+      if (currNode.value > childNode.value) {
+        currNode.left.value = childNode.right.value;
+        childNode = null;
+        return this;
+      } currNode.right = childNode.right;
+      childNode = null;
+      return this;
     } else if (childNode.left) {
-      if (rootNode.value > childNode.value) {
-        rootNode.left = childNode.left;
-      } rootNode.right = childNode.left;
+      console.log('deleting: ', childNode);
+      console.log('node to update: ', currNode);
+      if (currNode.value > childNode.value) {
+        currNode.left = childNode.left;
+        childNode = null;
+        return this;
+      } currNode.right = childNode.left;
+      childNode = null;
+      return this;
     }
   }
 
@@ -130,3 +152,5 @@ export default class BinarySearchTree {
     return this._findAndRemove(this.root, value);
   }
 }
+
+export default BinarySearchTree;
