@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint . && jest --coverage",
-    "jest": "jest --coverage"
+    "jest": "jest --coverage",
+    "testbin": "jest --coverage binary-tree.test.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "jest": "^22.4.3"
   },
   "dependencies": {
+    "dotenv": "^5.0.1",
     "queue-fifo": "^0.2.4"
   }
 }
