@@ -5,10 +5,6 @@ export default class BinarySearchTree {
     this.root = root;
   }
 
-  // ------------------------------------------------------------------
-  // sarah -- added these functions.. not necc working, linter is mad because i don't use 'this', these are just rough ideas
-  // ------------------------------------------------------------------
-
   // inOrder(rootNode, callback) { // eslint-disable-line
   //   if (rootNode) {
   //     inOrder(rootNode.left);
@@ -16,6 +12,7 @@ export default class BinarySearchTree {
   //     inOrder(rootNode.right);
   //   }
   // }
+
   _findSmallest(rootNode) { // eslint-disable-line
     if (!rootNode) {
       return undefined;
@@ -25,7 +22,7 @@ export default class BinarySearchTree {
     }
     return rootNode;
   }
-       
+
   // maxNode(rootNode) { // eslint-disable-line
   //   if (!rootNode) {
   //     return undefined;
@@ -35,10 +32,6 @@ export default class BinarySearchTree {
   //   }
   //   return rootNode;
   // }
-
-  // ------------------------------------------------------------------
-  // sarah -- the end of the potentially not working helper functions
-  // ------------------------------------------------------------------
 
   // Big O
   // Time: O(H) -> O(lg n)
@@ -94,32 +87,45 @@ export default class BinarySearchTree {
     }
     if (rootNode.value < value) {
       childNode = rootNode.right;
-      // return this._findAndRemove(rootNode.right, value);
     } else {
       childNode = rootNode.left;
-      //  return this._findAndRemove(rootNode.left, value);
     }
     if (!childNode) {
       return null;
     }
     if (childNode.value !== value) {
-      console.log(childNode.value, 'checking child node value');
       return this._findAndRemove(childNode, value);
     }
     if (!childNode.right && !childNode.left) {
-      childNode = null;
+      if (rootNode.value > childNode.value) {
+        rootNode.left = null;
+        return this;
+      } 
+      rootNode.right = null;
+      return this;
     } else if (childNode.right && childNode.left) {
-      let newVal = null;
-      newVal = this._findSmallest(childNode.right);
-      return this._findAndRemove(childNode.right, newVal);
+      let newNode = null;
+      newNode = this._findSmallest(childNode.right); // returns a node
+      childNode.value = newNode.value;
+      if (childNode.value === childNode.right.value) {
+        childNode.right = null;
+        return this;
+      }
+      return this._findAndRemove(childNode.right, newNode.value);
     } else if (childNode.right) {
       if (rootNode.value > childNode.value) {
         rootNode.left = childNode.right;
-      } rootNode.right = childNode.right;
+        return this;
+      } 
+      rootNode.right = childNode.right;
+      return this;
     } else if (childNode.left) {
       if (rootNode.value > childNode.value) {
         rootNode.left = childNode.left;
-      } rootNode.right = childNode.left;
+        return this;
+      } 
+      rootNode.right = childNode.left;
+      return this;
     }
   }
 

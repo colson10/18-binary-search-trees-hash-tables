@@ -21,6 +21,7 @@
     "jest": "^22.4.3"
   },
   "dependencies": {
+    "dotenv": "^5.0.1",
     "queue-fifo": "^0.2.4"
   }
 }

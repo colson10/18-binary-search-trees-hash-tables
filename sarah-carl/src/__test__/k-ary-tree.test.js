@@ -2,9 +2,9 @@
 
 import KAryTree from '../lib/k-ary-tree';
 import KAryNode from '../lib/k-ary-node';
-import Stack from '../lib/stack';
+// import Stack from '../lib/stack';
 
-let tree = null;
+// let tree = null;
 
 // const one = new KAryNode(1);
 // const two = new KAryNode(2);
@@ -26,12 +26,11 @@ let tree = null;
 // };
 
 afterEach(() => {
-  tree = null;
+  // tree = null;
   // values = '';
 });
 
 describe('Testing K-Ary-Tree methods', () => {
-
   describe('testing toString method', () => {
     // let values = [];
     test('value should be 12364578', () => {
@@ -71,7 +70,7 @@ describe('Testing K-Ary-Tree methods', () => {
   });
   describe('testing toArray method', () => {
     // let values = [];
-    test.only('value should be [1, 4, 3, 7, 6, 8, 5, 2]', () => {
+    test('value should be [1, 4, 3, 7, 6, 8, 5, 2]', () => {
       const one = new KAryNode(1);
       one.appendChild(2);
       one.appendChild(3);
@@ -84,24 +83,23 @@ describe('Testing K-Ary-Tree methods', () => {
       one.children[1].children[1].appendChild(8);
       
       const kAryTree = new KAryTree(one);
-      // kAryTree.breadthFirstSearch(print);
       expect(kAryTree.toArray()).toEqual([1, 4, 3, 7, 6, 8, 5, 2]);
     });
   });
-  describe('Testing our Stack constructor methods', () => {
-    test('#constructor', () => {
-      const testStack = new Stack();
-      expect(testStack._storage.head).toBeNull();
-    });
+  // describe('Testing our Stack constructor methods', () => {
+  //   test('#constructor', () => {
+  //     const testStack = new Stack();
+  //     expect(testStack._storage.head).toBeNull();
+  //   });
   
-    test('push method should add a value to the end of the stack storage', () => {
-      const testStack = new Stack();
-      testStack.push(1);
-      testStack.push(2);
-      testStack.push(100);
-      expect(testStack._storage.head.value).toEqual(1);
-      expect(testStack._storage.head.next.value).toEqual(2);
-      expect(testStack._storage.head.next.next.value).toEqual(100);
-    });
-  });
+  //   test('push method should add a value to the end of the stack storage', () => {
+  //     const testStack = new Stack();
+  //     testStack.push(1);
+  //     testStack.push(2);
+  //     testStack.push(100);
+  //     expect(testStack._storage.head.value).toEqual(1);
+  //     expect(testStack._storage.head.next.value).toEqual(2);
+  //     expect(testStack._storage.head.next.next.value).toEqual(100);
+  //   });
+  // });
 });

@@ -2,36 +2,61 @@
 
 import BinarySearchTree from '../lib/binary-search';
 import Node from '../lib/node';
-import util from 'util';
 
 let tree = null;
-const one = new Node(1);
-const two = new Node(2);
-const three = new Node(3);
-const four = new Node(4);
-const five = new Node(5);
-const six = new Node(6);
-const seven = new Node(7);
-const eight = new Node(8);
-const nine = new Node(9);
-const ten = new Node(10);
-const eleven = new Node(11);
+let one = new Node(1);
+// let two = new Node(2);
+let three = new Node(3);
+let four = new Node(4);
+let five = new Node(5);
+// let six = new Node(6);
+let seven = new Node(7);
+let eight = new Node(8);
+// let nine = new Node(9);
+let ten = new Node(10);
+let eleven = new Node(11);
 
-const expectedTree = new BinarySearchTree();
-expectedTree.insert(seven);
-expectedTree.insert(eleven);
-expectedTree.insert(four);
-expectedTree.insert(ten);
-expectedTree.insert(eight);
+let one2 = new Node(1);
+// let two2 = new Node(2);
+let three2 = new Node(3);
+let four2 = new Node(4);
+let five2 = new Node(5);
+// let six2 = new Node(6);
+let seven2 = new Node(7);
+let eight2 = new Node(8);
+// let nine2 = new Node(9);
+let ten2 = new Node(10);
+let eleven2 = new Node(11);
 
 afterEach(() => {
   tree = null;
-  // values = '';
+  one = new Node(1);
+  // two = new Node(2);
+  three = new Node(3);
+  four = new Node(4);
+  five = new Node(5);
+  // six = new Node(6);
+  seven = new Node(7);
+  eight = new Node(8);
+  // nine = new Node(9);
+  ten = new Node(10);
+  eleven = new Node(11);
+  one2 = new Node(1);
+  // two2 = new Node(2);
+  three2 = new Node(3);
+  four2 = new Node(4);
+  five2 = new Node(5);
+  // six2 = new Node(6);
+  seven2 = new Node(7);
+  eight2 = new Node(8);
+  // nine2 = new Node(9);
+  ten2 = new Node(10);
+  eleven2 = new Node(11);
 });
 
 describe('Testing Binary-Search-Tree methods', () => {
   describe('testing insert method', () => {
-    test('value should be', () => {
+    test('value should be as expected based on how the tree was constructed', () => {
       tree = new BinarySearchTree();
       tree.insert(seven);
       tree.insert(one);
@@ -39,13 +64,14 @@ describe('Testing Binary-Search-Tree methods', () => {
       tree.insert(four);
       tree.insert(ten);
       tree.insert(eight);
-      console.log('what is it', util.inspect(tree, { depth: null }));
       expect(tree.root.value).toEqual(7);
-      // maybe we could use one of our binary tree traversals to test?
+      expect(tree.root.left.value).toEqual(1);
+      expect(tree.root.left.right.value).toEqual(4);
+      expect(tree.root.right.value).toEqual(11);
     });
   });
   describe('testing find method', () => {
-    test('value should be', () => {
+    test('value should be as expected based on how the tree was constructed', () => {
       tree = new BinarySearchTree();
       tree.insert(seven);
       tree.insert(one);
@@ -55,25 +81,71 @@ describe('Testing Binary-Search-Tree methods', () => {
       tree.insert(eight);
       expect(tree.find(4)).toBeTruthy();
       expect(tree.find(200)).toBeFalsy();
-      // maybe we could use one of our binary tree traversals to test?
     });
   });
   describe('testing remove method', () => {
-    test.only('value should be', () => {
+    test('removal of node with two children', () => {
       tree = new BinarySearchTree();
       tree.insert(seven);
       tree.insert(four);
+      tree.insert(five);
       tree.insert(one);
       tree.insert(three);
       tree.insert(eleven);
       tree.insert(ten);
       tree.insert(eight);
-      console.log('what is it', util.inspect(tree, { depth: null }));
-      console.log('this is the expected tree...', expectedTree);
-      console.log('expected tree: ', util.inspect(expectedTree, { depth: null }));
-      // console.log(tree.remove(1), 'this is the tree.remove');
-      // maybe we could use one of our binary tree traversals to test?
+
+      const expectedTree = new BinarySearchTree();
+      expectedTree.insert(seven2);
+      expectedTree.insert(eleven2);
+      expectedTree.insert(five2);
+      expectedTree.insert(one2);
+      expectedTree.insert(three2);
+      expectedTree.insert(ten2);
+      expectedTree.insert(eight2);
+      expect(tree.remove(4)).toEqual(expectedTree);
+    });
+    test('removal of node with one child', () => {
+      tree = new BinarySearchTree();
+      tree.insert(seven);
+      tree.insert(four);
+      tree.insert(five);
+      tree.insert(one);
+      tree.insert(three);
+      tree.insert(eleven);
+      tree.insert(ten);
+      tree.insert(eight);
+
+      const expectedTree = new BinarySearchTree();
+      expectedTree.insert(seven2);
+      expectedTree.insert(eleven2);
+      expectedTree.insert(four2);
+      expectedTree.insert(five2);
+      expectedTree.insert(three2);
+      expectedTree.insert(ten2);
+      expectedTree.insert(eight2);
       expect(tree.remove(1)).toEqual(expectedTree);
+    });
+    test('removal of node with no children', () => {
+      tree = new BinarySearchTree();
+      tree.insert(seven);
+      tree.insert(four);
+      tree.insert(five);
+      tree.insert(one);
+      tree.insert(three);
+      tree.insert(eleven);
+      tree.insert(ten);
+      tree.insert(eight);
+
+      const expectedTree = new BinarySearchTree();
+      expectedTree.insert(seven2);
+      expectedTree.insert(eleven2);
+      expectedTree.insert(four2);
+      expectedTree.insert(five2);
+      expectedTree.insert(one2);
+      expectedTree.insert(ten2);
+      expectedTree.insert(eight2);
+      expect(tree.remove(3)).toEqual(expectedTree);
     });
   });
 });
