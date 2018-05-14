@@ -1,5 +1,12 @@
 ### Binary Search Tree and K-ary Tree Traversals
 
+<!--in your README, write documentation for your data structures
+your documentation should includes code block usage examples
+provide instructions for:
+installing and using your data structure
+accessing each method
+running your tests -->
+
 ####Binary Search Tree 
 
 __.insert(node)__
