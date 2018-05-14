@@ -1,8 +1,9 @@
 'use strict';
 
+import util from 'util';
 import BinarySearchTree from '../lib/binary-search';
 import Node from '../lib/node';
-import util from 'util';
+
 
 let tree = null;
 const one = new Node(1);
@@ -71,7 +72,7 @@ describe('Testing Binary-Search-Tree methods', () => {
     });
   });
   describe('testing remove method', () => {
-    test('removing one, with one child node, value should be', () => {
+    test.only('removing one, with one child node, value should be', () => {
       tree = null;
       tree = new BinarySearchTree();
       tree.insert(seven);
@@ -81,11 +82,12 @@ describe('Testing Binary-Search-Tree methods', () => {
       tree.insert(eleven);
       tree.insert(ten);
       tree.insert(eight);
+      tree.remove(1);
       console.log('expected tree: ', util.inspect(testTree, { depth: null }));
-      console.log('tree afer remove', tree.remove(1));
-      expect(tree.remove(1)).toEqual(testTree);
+      console.log('tree afer remove', tree);
+      expect(tree).toEqual(testTree);
     });
-    test.only('removing two, with two children, value should be', () => {
+    test('removing two, with two children, value should be', () => {
       const treeRemoveTwo = new BinarySearchTree();
       treeRemoveTwo.insert(seven);
       treeRemoveTwo.insert(four);
